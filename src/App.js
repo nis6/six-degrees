@@ -2,6 +2,9 @@ import network_upper from "./assets/network_upper.jpg";
 import network_lower from "./assets/network_lower.jpg";
 import Header from "./components/Header";
 import Profiles from "./components/Profiles";
+import ProfileForm from './components/ProfileForm';
+import ConnectionForm from "./components/ConnectionForm";
+
 function App() {
   return (
     <div>
@@ -14,12 +17,14 @@ function App() {
 
       <Header />
       <Profiles />
+
       <footer style={{ bottom: "0" }} >
         <img src={network_lower} alt="network-2" style={{
           width: "100%", height: "60vh", opacity: "0.1"
         }} />
       </footer>
-
+      <ProfileForm />
+      <ConnectionForm />
     </div>
   );
 }
