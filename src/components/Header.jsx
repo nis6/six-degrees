@@ -1,4 +1,4 @@
-import { Box, Heading, Flex, Button, Divider } from "@chakra-ui/react";
+import { Box, Heading, Flex, Button } from "@chakra-ui/react";
 import ProfileForm from "./ProfileForm";
 import { useState } from "react";
 
@@ -46,7 +46,6 @@ export default function Header() {
           bg="whiteAlpha.900"
           border="solid 1px black"
           color="black"
-          s
           _hover={{ bg: "whiteAlpha.400", color: "whiteAlpha.900" }}
           _active={{ bg: "whiteAlpha.600" }}
         >

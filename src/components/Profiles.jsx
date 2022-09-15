@@ -16,12 +16,13 @@ export default function Profiles(props) {
         borderRadius="2rem"
         m={10}
         p="2"
+        width="90%"
       >
         <Heading size="lg" fontWeight="semibold">
           User Profiles
         </Heading>
         {Object.keys(ProfileDB).map((user_name) => (
-          <Profile name={user_name} />
+          <Profile name={user_name} key={user_name} />
         ))}
       </VStack>
     </div>
