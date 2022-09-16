@@ -1,10 +1,7 @@
 import { VStack, StackDivider, Heading } from "@chakra-ui/react";
 import Profile from "./Profile";
 
-export default function Profiles(props) {
-  const ProfileDB = JSON.parse(localStorage.getItem("ProfileDB"));
-  console.log("here the LIST of Profiles: ", Object.keys(ProfileDB));
-
+export default function Profiles({ProfileDB}) {
   return (
     <div style={{ textAlign: "center" }}>
       <VStack

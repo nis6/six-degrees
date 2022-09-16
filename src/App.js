@@ -28,8 +28,8 @@ function App() {
         />
       </div>
 
-      <Header />
-      <Profiles />
+      <Header ProfileDB={ProfileDB} />
+      <Profiles ProfileDB={ProfileDB} />
 
       <footer style={{ bottom: "0" }}>
         <img

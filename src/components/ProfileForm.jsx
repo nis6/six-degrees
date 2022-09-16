@@ -8,13 +8,12 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 
-export default function ProfileForm({ showModal, onClose }) {
+export default function ProfileForm({ showModal, onClose, Profiles }) {
   const [input, setInput] = useState("");
   const [isError, setError] = useState(false);
-  const [ProfileDB, setProfileDB] = useState({});
-  const [doesExist, setExist] = useState(false);
-  console.log("ProfileDB inside function, on render:L ", ProfileDB);
-  console.log("outside useEffect hook, isError set: ", isError);
+  const [ProfileDB, setProfileDB] = useState(Profiles);
+  const [doesExist, setDoesExist] = useState(false);
+  const [btnValid, setBtnValid] = useState('Submit')
 
   useEffect(() => {
     if (input !== "") setError(false);
@@ -22,34 +21,26 @@ export default function ProfileForm({ showModal, onClose }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    setError(input === "");
+    input === "" && setError(true);
 
-    const ProfileDBtemp = JSON.parse(localStorage.getItem("ProfileDB"));
-    console.log("here is ProfileDBtemp: ", ProfileDBtemp);
-
-    if (ProfileDBtemp) {
-      setProfileDB(Object.assign(ProfileDB, ProfileDBtemp)); //PREVIOSLY: setProfileDB(ProfileDBtemp);
-      console.log("ProfileDB state set to: ", ProfileDB);
-    } else localStorage.setItem("ProfileDB", JSON.stringify(ProfileDB));
-    console.log("This is ProfileDB before form submission: ", ProfileDB);
-
-    if (ProfileDB.hasOwnProperty(input)) setExist(true);
-    else {
-      setExist(false);
-      ProfileDB[input] = {};
-      console.log("ProfileDB after adding on input to it: ", ProfileDB);
-      setProfileDB(ProfileDB);
-    }
+    setDoesExist(false);
+    let newObj = Object.assign(ProfileDB, { [input]: {} });
+    setProfileDB(newObj);
     localStorage.setItem("ProfileDB", JSON.stringify(ProfileDB));
-    console.log("This is ProfileDB after form submission: ", ProfileDB);
-
-    console.log("form submitted, input value: ", input);
     setInput("");
+    onClose()
   };
 
-  const handleInputChange = (e) => {
+const handleInputChange = (e) => {
     setInput(e.target.value);
-    console.log("input set to: ", e.target.value);
+    if (ProfileDB.hasOwnProperty(e.target.value)) {
+      console.log('Name already exists')
+      setDoesExist(true);
+      setBtnValid('Invalid')
+    } else {
+      setDoesExist(false);
+      setBtnValid('Submit')
+    }
   };
 
   if (!showModal) {
@@ -86,6 +77,7 @@ export default function ProfileForm({ showModal, onClose }) {
             onChange={handleInputChange}
             width="60%"
             placeholder="Name"
+            autoComplete="off"
           />
           <Button
             size="s"
@@ -98,7 +90,7 @@ export default function ProfileForm({ showModal, onClose }) {
             _active={{ bg: "blackAlpha.600" }}
             type="submit"
           >
-            Submit
+            {btnValid}
           </Button>
         </FormControl>
       </form>
