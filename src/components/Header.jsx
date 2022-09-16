@@ -2,7 +2,7 @@ import { Box, Heading, Flex, Button } from "@chakra-ui/react";
 import ProfileForm from "./ProfileForm";
 import { useState } from "react";
 
-export default function Header() {
+export default function Header({ProfileDB}) {
   const [showModal, setModal] = useState(false);
 
   function toggleModal() {
@@ -39,7 +39,7 @@ export default function Header() {
         >
           Add Profile
         </Button>
-        <ProfileForm showModal={showModal} onClose={() => onClose()} />
+        <ProfileForm showModal={showModal} onClose={() => onClose()} Profiles={ProfileDB} />
         <Button
           size="md"
           m="1rem"
