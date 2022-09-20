@@ -28,7 +28,6 @@ const Name = styled.div`
 
 export default function Profile({ name }) {
   const [showModal, setModal] = useState(false);
-  const [ProfileDB, setProfileDB] = useState({});
   function toggleModal() {
     setModal(!showModal);
   }

@@ -13,7 +13,7 @@ export default function ProfileForm({ showModal, onClose, Profiles }) {
   const [isError, setError] = useState(false);
   const [ProfileDB, setProfileDB] = useState(Profiles);
   const [doesExist, setDoesExist] = useState(false);
-  const [btnValid, setBtnValid] = useState('Submit')
+  console.log("These are the profiles came from props: ", ProfileDB);
 
   useEffect(() => {
     if (input !== "") setError(false);
@@ -21,26 +21,24 @@ export default function ProfileForm({ showModal, onClose, Profiles }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    input === "" && setError(true);
-
-    setDoesExist(false);
-    let newObj = Object.assign(ProfileDB, { [input]: {} });
-    setProfileDB(newObj);
-    localStorage.setItem("ProfileDB", JSON.stringify(ProfileDB));
-    setInput("");
-    onClose()
-  };
-
-const handleInputChange = (e) => {
-    setInput(e.target.value);
-    if (ProfileDB.hasOwnProperty(e.target.value)) {
-      console.log('Name already exists')
+    if (input === "") {
+      setError(true);
+    } else if (ProfileDB.hasOwnProperty(input)) {
+      console.log("Name already exists: ", doesExist);
+      console.log("If it is an Error: ", isError);
       setDoesExist(true);
-      setBtnValid('Invalid')
     } else {
       setDoesExist(false);
-      setBtnValid('Submit')
+      let newObj = Object.assign(ProfileDB, { [input]: {} });
+      setProfileDB(newObj);
+      localStorage.setItem("ProfileDB", JSON.stringify(ProfileDB));
+      setInput("");
+      onClose();
     }
+  };
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
   };
 
   if (!showModal) {
@@ -60,16 +58,18 @@ const handleInputChange = (e) => {
           gap="0.5rem"
         >
           <FormLabel>Add Profile</FormLabel>
-          {!isError ? (
+          {isError ? (
+            <FormErrorMessage style={{ color: "red", textAlign: "center" }}>
+              Please enter a name for the user profile.
+            </FormErrorMessage>
+          ) : doesExist ? (
+            <FormHelperText style={{ color: "red", textAlign: "center" }}>
+              This user profile already exists.
+            </FormHelperText>
+          ) : (
             <FormHelperText>
               Please enter a name for the user profile.
             </FormHelperText>
-          ) : doesExist ? (
-            <FormErrorMessage>This user profile already exists.</FormErrorMessage>
-          ) : (
-            <FormErrorMessage>
-              Please enter a name for the user profile.
-            </FormErrorMessage>
           )}
           <Input
             type="text"
@@ -90,7 +90,7 @@ const handleInputChange = (e) => {
             _active={{ bg: "blackAlpha.600" }}
             type="submit"
           >
-            {btnValid}
+            Submit
           </Button>
         </FormControl>
       </form>

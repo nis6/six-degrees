@@ -27,10 +27,8 @@ function App() {
           }}
         />
       </div>
-
       <Header ProfileDB={ProfileDB} />
       <Profiles ProfileDB={ProfileDB} />
-
       <footer style={{ bottom: "0" }}>
         <img
           src={network_lower}
