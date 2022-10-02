@@ -8,10 +8,9 @@ import {
   FormHelperText,
 } from "@chakra-ui/react";
 
-export default function ProfileForm({ showModal, onClose, Profiles }) {
+export default function ProfileForm({ showModal, onClose, ProfileDB }) {
   const [input, setInput] = useState("");
   const [isError, setError] = useState(false);
-  const [ProfileDB, setProfileDB] = useState(Profiles);
   const [doesExist, setDoesExist] = useState(false);
   console.log("These are the profiles came from props: ", ProfileDB);
 
@@ -29,8 +28,7 @@ export default function ProfileForm({ showModal, onClose, Profiles }) {
       setDoesExist(true);
     } else {
       setDoesExist(false);
-      let newObj = Object.assign(ProfileDB, { [input]: {} });
-      setProfileDB(newObj);
+      Object.assign(ProfileDB, { [input]: [] });
       localStorage.setItem("ProfileDB", JSON.stringify(ProfileDB));
       setInput("");
       onClose();

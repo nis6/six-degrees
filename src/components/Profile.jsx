@@ -26,7 +26,7 @@ const Name = styled.div`
   align-items: center;
 `;
 
-export default function Profile({ name }) {
+export default function Profile({ name, removeProfile, ProfileDB }) {
   const [showModal, setModal] = useState(false);
   function toggleModal() {
     setModal(!showModal);
@@ -34,11 +34,6 @@ export default function Profile({ name }) {
   function onClose() {
     setModal(false);
     console.log("onClose: modal closed");
-  }
-  function removeProfile() {
-    const ProfileDBtemp = JSON.parse(localStorage.getItem("ProfileDB"));
-    console.log("DELETE ", delete ProfileDBtemp[name]);
-    localStorage.setItem("ProfileDB", JSON.stringify(ProfileDBtemp));
   }
 
   return (
@@ -59,7 +54,7 @@ export default function Profile({ name }) {
           border="solid 1px white"
           _hover={{ bg: "blackAlpha.800" }}
           _active={{ bg: "blackAlpha.500" }}
-          onClick={() => removeProfile()}
+          onClick={() => removeProfile(name)}
         >
           Remove
         </Button>
@@ -74,7 +69,12 @@ export default function Profile({ name }) {
           Connect
         </Button>
       </Flex>
-      <ConnectionForm showModal={showModal} onClose={onClose} />
+      <ConnectionForm
+        showModal={showModal}
+        onClose={onClose}
+        user_name={name}
+        Profiles={ProfileDB}
+      />
     </ProfileContainer>
   );
 }

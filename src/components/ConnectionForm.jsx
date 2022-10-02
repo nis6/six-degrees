@@ -22,9 +22,10 @@ export const Overlay = styled.div`
 `;
 const modal = document.getElementById("modal");
 
-export default function ConnectionForm({ showModal, onClose }) {
+export default function ConnectionForm({ showModal, onClose, user_name, Profiles }) {
   const [input, setInput] = useState("");
   const [isError, setError] = useState(false);
+  const [doesExist, setExist] = useState(true);
 
   useEffect(() => {
     if (input !== "") setError(false);
@@ -34,7 +35,13 @@ export default function ConnectionForm({ showModal, onClose }) {
     event.preventDefault();
     console.log("form submitted, input value: ", input);
     if (input === "") setError(input === "");
-    else setError(false);
+    else {
+      setError(false);
+      if (Object.keys(Profiles).includes(input)) Profiles[user_name].push(input);
+      else setExist(false);
+    }
+    setInput("");
+    onClose();
   };
 
   const handleInputChange = (e) => {
@@ -52,7 +59,7 @@ export default function ConnectionForm({ showModal, onClose }) {
       <Box
         border="black solid 1px"
         width="50vw"
-        p="1rem"
+        p="1rem 4rem"
         m="1rem"
         borderRadius="1rem"
         bg="white"
@@ -83,7 +90,7 @@ export default function ConnectionForm({ showModal, onClose }) {
             {!isError ? (
               <FormHelperText>
                 Please enter the name and type of relationship for this connection
-                profile.
+                profile. For now please select friends as the type of connection.
               </FormHelperText>
             ) : (
               <FormErrorMessage>Please enter a name.</FormErrorMessage>

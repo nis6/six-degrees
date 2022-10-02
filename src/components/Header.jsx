@@ -43,7 +43,7 @@ export default function Header({ ProfileDB }) {
         <ProfileForm
           showModal={showModal}
           onClose={() => onClose()}
-          Profiles={ProfileDB}
+          ProfileDB={ProfileDB}
         />
         <Button
           size="md"
